@@ -10,6 +10,7 @@ Classmate lets you add your classes to your profile quickly so you can get right
 > * Designed and Prototyped UI in Figma
 > * Developed Django HTML templates, implementing Bootstrap and custom CSS.
 > * Maintained models and linked data to front end.
+> * Implemented Algolia search API to quickly search for classes in dashboard
 
 ### Classmate is built using these tools and technologies
 
