@@ -4,9 +4,12 @@ Group B-1: Classmate
 [Classmate](https://classmate.herokuapp.com/) helps you find group study sessions for your classes.
 ------------------------------------------------------------
 
-By tapping into the Luther's List API, Classmate lets you add your classes to your profile quickly so you can get right to finding your study partners. Quiz coming up? Last minute cram? We got you covered, join now!  
-
-**Main site: https://classmate.herokuapp.com/**
+Classmate lets you add your classes to your profile quickly so you can get right to finding your study partners. Quiz coming up? Last minute cram? We got you covered, join now!  
+**Main site: https://classmate.herokuapp.com/**  
+> My contribution to this group project included:
+> * Designed and Prototyped UI in Figma
+> * Developed Django HTML templates, implementing Bootstrap and custom CSS.
+> * Maintained models and linked data to front end.
 
 ### Classmate is built using these tools and technologies
 
@@ -29,13 +32,13 @@ APIs used:
 [Algolia Search API](https://www.algolia.com/)  
 [Google Fonts API](https://developers.google.com/fonts)  
 
+App Preview:  
+| <img width="1200" alt="Main Dashboard" src="readme-images/dashboard-home.png">  Main Dashboard | <img width="1200" alt="Classes Page with Search" src="readme-images/class-search-active.png">  Classes Page (with Algolia Search API) |
+|:--:|:--:|
+| <img width="1200" alt="Landing Page" src="readme-images/Landing-Mockup.png"> **Landing Page** | <img width="1200" alt="Study Session and Discussion Board" src="readme-images/discussion-board.png"> **Study Session and Discussion Board** |
+
 Sources:  
 [Undraw](https://undraw.co/illustrations) and [Blush](https://blush.design/) for illustrations  
 [ProfileMe](https://www.profileme.dev/create-profile) for this readme template  
 [Meshgradient](https://meshgradient.com/) for the gradients in the background  
 [Django Jazzmin](https://django-jazzmin.readthedocs.io/) for the admin panel theme
-
-App Preview:  
-| <img width="1200" alt="Main Dashboard" src="readme-images/dashboard-home.png">  Main Dashboard | <img width="1200" alt="Classes Page with Search" src="readme-images/class-search-active.png">  Classes Page (with Algolia Search API) |
-|:--:|:--:|
-| <img width="1200" alt="Landing Page" src="readme-images/Landing-Mockup.png"> **Landing Page** | <img width="1200" alt="Study Session and Discussion Board" src="readme-images/discussion-board.png"> **Study Session and Discussion Board** |
