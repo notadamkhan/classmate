@@ -1,0 +1,40 @@
+from django.urls import path
+
+from . import views
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('onboarding/', views.index, name='onboardingFallback'),
+    path('onboarding/1/', views.onboarding, name='setClasses'),
+    path('onboarding/1/addclass/', views.addClass, name='addClass'),
+    path('onboarding/1/removeClass/<int:pk>/', views.removeClass, name='removeClass'),
+    path('onboarding/2/', views.getPreferencesPage, name='setPreferences'),
+    path('onboarding/2/addpref/', views.setPreferences, name='changePreferences'),
+    path('onboarding/3/', views.getBioPage, name='setBio'),
+    path('onboarding/3/addbio/', views.setBio, name='changeBio'),
+    path('onboarding/4/', views.namingChanges, name="namingChanges"),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('dashboard/logout/', views.confirmLogout, name='confirmLogout'),
+    path('dashboard/profile/<int:pk>/', views.getProfile, name='getProfile'),
+    path('dashboard/friends/', views.Friend, name='getFriends'),
+    path('dashboard/friends/addfriend', views.makeFriend, name='changeFriends'),
+    path('dashboard/classes/', views.viewClasses, name='viewClasses'),
+    path('dashboard/classes/<int:pk>/', views.viewClass, name='viewClass'),
+    path('dashboard/classes/<int:pk>/inactivate', views.inactivateClass, name='inactivateClass'),
+    path('dashboard/classes/<int:pk>/activate', views.activateClass, name='activateClass'),
+    path('dashboard/classes/<int:pk>/join',
+         views.joinExistingClass, name='joinClass'),
+    path('dashboard/classes/<int:pk>/leave',
+         views.leaveExistingClass, name='leaveClass'),
+    path('dashboard/classes/<int:pk>/addsession', views.createStudySession, name='createStudySession'),
+    path('dashboard/sessions/<int:pk>/edit',
+         views.editStudySession, name='editStudySession'),
+    path('dashboard/sessions/', views.viewStudySessions, name='viewStudySessions'),
+    path('dashboard/sessions/<int:pk>/', views.viewStudySession, name='viewStudySession'),
+    path('dashboard/sessions/<int:pk>/join', views.joinStudySession, name='joinStudySession'),
+    path('dashboard/sessions/<int:pk>/leave', views.leaveStudySession, name='leaveStudySession'),
+    path('dashboard/sessions/<int:pk>/message', views.setDiscussionPage, name='getDis'),
+    path('dashboard/sessions/message/<int:pk>/delete',
+         views.deleteMessage, name='deleteMessage'),
+
+
+]

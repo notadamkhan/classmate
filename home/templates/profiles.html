@@ -1,0 +1,145 @@
+{% load socialaccount %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Classmate</title>
+        <link rel="stylesheet" href="{% static 'dashboard_style.css' %}">
+        <script src="{% static 'onboarding.js' %}"></script>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Montserrat:700">
+        <link rel="stylesheet" 
+              href="https://fonts.googleapis.com/css?family=Inter:400,500,600">        
+        <link rel="icon"
+              type="image/svg+xml"
+              href="{% static 'images/favicon.svg' %}"/>
+        <meta name="theme-color" content="#FDFDFD">
+    </head>
+    <body class="d-flex flex-column min-vh-100">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <h1 class="title mt-4">Classmate</h1>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'viewStudySessions' %}">Groups</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'viewClasses' %}">Classes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'getFriends' %}">Friends</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'getProfile' cur_user_id%}">Profile</a>
+                </li>
+                {% if request.user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link me-auto" href="{% url "admin:index" %}">Admin</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link me-auto" href="{% url 'confirmLogout' %}">Logout</a>
+                </li>
+            </ul>
+            <!-- <div class="text-center">
+                <h2>{{ user }}'s Profile</h2>
+            </div> -->
+            <div class="container" style="margin-top: 5rem;">
+                <div class="card card-profile mb-3">
+                    <div class="row">
+                        <div class="col-xl-8 m-auto order-xl-2 mb-5 mb-xl-0">
+                            <div class="text-center">
+                                <div class="circle">
+                                    <p class="circle-inner" style="width: 15rem; height: 15rem; font-size: 60px;">{{ found_user.first_name|title|slice:":1" }}{{ found_user.last_name|title|slice:":1" }}</p>
+                                </div>
+                            </div>
+    
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="text-center">
+                                        <h2 class="card-title">{{ found_user.first_name|title }} {{ found_user.last_name|title }}</h2>
+                                        <h4 class="card-subtitle mb-2">username: {{ found_user }}</h4>
+                                        
+                                        <h5 class="card-subtitle mb-2 text-muted">{{ school }}</h5>
+                                        <h5 class="card-subtitle mb-2 text-muted">{{ major }}</h5>
+                                        <h5 class="card-subtitle mb-2 text-muted">{{ year }}</h5>
+                                        <div>
+                                            <a href="{% url 'getFriends' %}" class="btn btn-light" role="button" style="margin-right:20px; width: 5rem; height: 3.4rem;">
+                                                <span class="fw-bolder" style="font-size: 1rem"> {{ num_friends }} </span><br/>
+                                                {% if num_friends == 1 %}
+                                                    <span style="font-size: 0.8rem">Friend</span>
+                                                {% else %}
+                                                    <span style="font-size: 0.8rem">Friends</span>
+                                                {% endif %}
+                                            </a>
+                                            <a href="{% url 'viewClasses' %}" class="btn btn-light" role="button" style="width: 5rem; height: 3.4rem;">
+                                                <span class="fw-bolder" style="font-size: 1rem;"> {{ num_classes }} </span><br/>
+                                                {% if num_classes == 1 %}
+                                                    <span style="font-size: 0.8rem">Class</span>
+                                                {% else %}
+                                                    <span style="font-size: 0.8rem">Classes</span>
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center">
+                                        <br>
+                                        <button type="" class="btn btn-profile" style="width:15rem;">{{ favorite_location }}</button>
+                                        {% if in_person %}
+                                            <button type="" class="btn btn-profile" style="width:15rem;">In Person</button>
+                                        {% else %}
+                                            <button type="" class="btn btn-profile" style="width:15rem;">Online</button>
+                                        {% endif %}
+
+                                        {% if cramming %}
+                                            <button type="" class="btn btn-profile" style="width:15rem;">Last Minute</button>
+                                        {% else %}
+                                            <button type="" class="btn btn-profile" style="width:15rem;">In Advance</button>
+                                        {% endif %}
+
+                                        {% if bio %}
+                                            <div>
+                                                <p class="card-text text-muted" style="margin-top:2rem;">&emsp;{{ bio }}</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if owned_profile %}
+                                <div class="text-center">
+                                    <a href="{% url 'setClasses' %}" class="btn btn-study-session" role="button" style="margin-top: 3rem;">Add Classes and Edit Profile</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+            <section class="mt-auto">
+                <!-- Footer -->
+                <footer class="text-center text-white" style="background-color: rgb(97, 129, 247);">
+                  <!-- Grid container -->
+                  <div class="text-center p-3" style="background-color: rgb(97, 129, 247);">
+                    Classmate © 2022 Copyright:
+                    <a class="text-white" href="https://github.com/uva-cs3240-f22/project-b-1">Group B-1</a>
+                  </div>
+                </footer>
+                <!-- Footer -->
+              </section>
+                
+            
+            
+        </html>
+    </html>

@@ -1,0 +1,19 @@
+# Django is needed to run Django
+Django==4.0.8 # known issue with Django 4.1 and collectstatic so I downgraded to 4.0 and it works 
+# gunicorn is needed by Heroku to launch the web server
+gunicorn
+# django-heroku is ONLY needed by Heroku for their internal process
+# if you have errors with psycopg2 or django-heroku, use the code at the bottom of settings.py to avoid the error
+# the outcome of using this bypass is that locally you will need to use either SQLite or connect to Heroku's Postgres DB
+django-heroku
+# django-bootstrap-v5 is needed to use Bootstrap 5
+django-bootstrap-v5
+#Authentication module
+django-allauth
+#jazzmin is a theme for the admin panel
+django-jazzmin
+#whitenoise
+whitenoise==6.2.0
+#algolia search
+algoliasearch==2.6.2
+algoliasearch-django==2.0.0

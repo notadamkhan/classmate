@@ -1,0 +1,175 @@
+{% load socialaccount %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Classmate</title>
+        <link rel="stylesheet" href="{% static 'dashboard_style.css' %}">
+        <script src="{% static 'onboarding.js' %}"></script>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Montserrat:700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+        <link rel="icon"
+              type="image/svg+xml"
+              href="{% static 'images/favicon.svg' %}"/>
+        <meta name="theme-color" content="#FDFDFD">
+    </head>
+    <body class="d-flex flex-column min-vh-100">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <h1 class="title mt-4">Classmate</h1>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'viewStudySessions' %}">Groups</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'viewClasses' %}">Classes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'getFriends' %}">Friends</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'getProfile' cur_user_id %}">Profile</a>
+                </li>
+                {% if request.user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link me-auto" href="{% url "admin:index" %}">Admin</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link me-auto" href="{% url 'confirmLogout' %}">Logout</a>
+                </li>
+            </ul>
+            <div class="container" style="">
+                <div class="mt-4">
+                    <div class="card" style=" float: left; width: 50%;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h4 class="card-title">{{ foundSession.title }}</h4>
+                                    {%if request.user.Profile.id == foundSession.organizer.id%}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6181F7" class="bi bi-pencil-fill" viewBox="0 0 16 16" style="margin: 5px;">
+                                        <a href="{% url 'editStudySession' foundSession.id %}">
+                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                                        </a>
+                                    </svg>
+                                  {%endif%}
+                                </div>
+
+                            
+                            <h6 class="card-text">Description: {{ foundSession.description|urlize }}</h6>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Led by: {{ foundSession.organizer }}</li>
+                            <li class="list-group-item">
+                                For: {{ foundSession.associatedClass.class_name }} with {{ foundSession.associatedClass.instructor }}
+                            </li>
+                            <li class="list-group-item">Location: {{ foundSession.location }}</li>
+                            <li class="list-group-item">Starts at: {{ foundSession.startTime }}</li>
+                            <li class="list-group-item">Ends at: {{ foundSession.endTime }}</li>
+                        </ul>
+                        <div class="card-body">
+                            <h6 class="card-text">Attendees:</h6>
+                            <ul>
+                                {% for attendee in foundSession.attendees.all %}<li>{{ attendee }}</li>{% endfor %}
+                            </ul>
+                        </div>
+                        {% if inSession %}
+                            <a href="{% url 'leaveStudySession' foundSession.id %}"
+                               class="btn btn-primary btn-study-session">Leave Session</a>
+                        {% else %}
+                            <a href="{% url 'joinStudySession' foundSession.id %}"
+                               class="btn btn-primary btn-study-session">Join Session!</a>
+                        {% endif %}
+                    </div>
+                    <div class=""style="float: right; width: 50%; margin-bottom: 20px;">
+                        <div class="card" style="margin-left: 10px;">
+                            {% if discussionBoard %}
+                            <p class="card-title h3 p-3" style='margin-top: 8px;'>Discussion Board</p>
+                                {% for m in discussionBoard %}
+                                {% if forloop.counter == 1 %}
+                                <div class="card rounded-0 border-start-0 border-end-0" style="">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                        <h5 class="card-title">{{ m.sender }}</h5>
+                                            {% if m.sender == request.user.Profile %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#808080" class="bi bi-trash-fill" viewBox="0 0 16 16" style="margin: 5px;">
+                                                <a href="{% url 'deleteMessage' m.id %}">
+                                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                                </a>
+                                            </svg>
+                                            {%endif%}
+                                        </div>
+
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ m.date }}</h6>
+                                        <p class="card-text">{{ m.message }}</p>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <div class="card rounded-0 border-start-0 border-end-0 border-top-0" style="">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="card-title">{{ m.sender }}</h5>
+                                                {% if m.sender == request.user.Profile %}
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash-fill" viewBox="0 0 16 16" style="
+                                                fill: #808080; margin: 5px;">
+                                                    <a href="{% url 'deleteMessage' m.id %}">
+                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                                    </a>
+                                                </svg>
+                                            {%endif%}
+                                        </div>
+
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{ m.date }}</h6>
+                                        <p class="card-text">{{ m.message|urlize }}</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                        {% else %}
+                        <p class="card-title h3 p-3">Discussion Board</p>
+                        {% endif %}
+                        <form method="POST"
+                              action="{% url 'viewStudySession' foundSession.id %}"
+                              style="margin-left: 10px; margin-right: 10px; margin-bottom: 1px;margin-top: 20px;">
+                            <div class="input-group mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       name="message"
+                                       placeholder="Enter Message..."
+                                       aria-label="messagebox"
+                                       aria-describedby="Message Box">
+                                <button class="btn btn-study-session" type="submit" value="submit">Send</button>
+                            </div>
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div
+    </body>
+    <section class="mt-auto">
+        <!-- Footer -->
+        <footer class="text-center text-white"
+                style="background-color: rgb(97, 129, 247);">
+            <!-- Grid container -->
+            <div class="text-center p-3" style="background-color: rgb(97, 129, 247);">
+                Classmate © 2022 Copyright:
+                <a class="text-white"
+                   href="https://github.com/uva-cs3240-f22/project-b-1">Group B-1</a>
+            </div>
+        </footer>
+        <!-- Footer -->
+    </section>
+</html>
