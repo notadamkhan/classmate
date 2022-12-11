@@ -7,10 +7,10 @@ Group B-1: Classmate
 Classmate lets you add your classes to your profile quickly so you can get right to finding your study partners. Quiz coming up? Last minute cram? We got you covered, join now!  
 **Main site: https://classmate.herokuapp.com/**  
 > My contribution to this group project included:
-> * Designed and Prototyped UI in Figma
+> * Designed and Prototyped UI in Figma.
 > * Developed Django HTML templates, implementing Bootstrap and custom CSS.
 > * Maintained models and linked data to front end.
-> * Implemented Algolia search API to quickly search for classes in dashboard
+> * Implemented Algolia search API to quickly search for classes in dashboard.
 
 ### Classmate is built using these tools and technologies
 
