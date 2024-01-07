@@ -1,7 +1,7 @@
 Classmate
 ==========================
 
-[Classmate](https://classmate.herokuapp.com/) helps you find group study sessions for your classes.
+Classmate helps you find group study sessions for your classes.
 ------------------------------------------------------------
 
 > **My contribution to this group project included:**
@@ -10,7 +10,7 @@ Classmate
 > * Maintained models and linked data to front end.
 > * Implemented Algolia search API to quickly search for classes in dashboard.
 
-Classmate lets you add your classes to your profile quickly so you can get right to finding your study partners. Quiz coming up? Last minute cram? We got you covered, join now! **Main site: https://classmate.herokuapp.com/**  
+Classmate lets you add your classes to your profile quickly so you can get right to finding your study partners. Quiz coming up? Last minute cram? We got you covered, join now! ~~**Main site: https://classmate.herokuapp.com/**~~ (no longer live)
 
 Classmate is a full stack web application that incorporates the Django Web Framework, Python, PostgreSQL, HTML, Bootstrap, CSS, and JavaScript.
 
